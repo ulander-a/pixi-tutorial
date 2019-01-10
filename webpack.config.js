@@ -1,22 +1,24 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: {
     app: './src/index.js',
-    print: './src/print.js'
   },
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    hot: true
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Webpack'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ],
   output: {
     filename: '[name].bundle.js',
@@ -26,16 +28,11 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader'
-        ]
+        use: ['file-loader']
       }
     ]
   }
