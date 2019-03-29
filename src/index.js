@@ -1,4 +1,4 @@
 // import { createPixiApp } from './js/app'
 // createPixiApp()
-import Parallax from './js/parallax'
+import './js/parallax/index'
 // import './style/app.css'
