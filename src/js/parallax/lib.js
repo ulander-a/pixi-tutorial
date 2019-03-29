@@ -25,3 +25,18 @@ export function Mid() {
 }
 
 Mid.prototype = Object.create(PIXI.extras.TilingSprite.prototype)
+
+export class Scroller {
+    constructor(stage) {
+        this.far = new Far()
+        stage.addChild(this.far)
+
+        this.mid = new Mid()
+        stage.addChild(this.mid)
+    }
+
+    update() {
+        this.far.update()
+        this.mid.update()
+    }
+}

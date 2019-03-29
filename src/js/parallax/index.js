@@ -1,27 +1,26 @@
 import 'pixi.js'
-import { Far, Mid } from './lib.js'
+import { Scroller } from './lib.js'
 
-let app = new PIXI.Application({
-    width: 512,
-    height: 384,
-    antialias: true,
-    transparent: false,
-    resolution: 1
-})
+function init() {
+    let app = new PIXI.Application({
+        width: 512,
+        height: 384,
+        antialias: true,
+        transparent: false,
+        resolution: 1
+    })
 
-document.body.appendChild(app.view)
+    document.body.appendChild(app.view)
 
-const far = new Far()
-app.stage.addChild(far)
+    const scroller = new Scroller(app.stage)
 
-const mid = new Mid()
-app.stage.addChild(mid)
+    const update = () => {
+        scroller.update()
+        requestAnimationFrame(update)
+    }
 
-const update = () => {
-    far.update()
-    mid.update()
-    
     requestAnimationFrame(update)
 }
 
-requestAnimationFrame(update)
+
+init()
