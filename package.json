@@ -1,7 +1,7 @@
 {
-  "name": "webpack_precofig",
+  "name": "pixi-tutorial",
   "version": "0.0.1",
-  "description": "Preconfigured webpack settings for easy app-making",
+  "description": "Trying out pixi.js",
   "author": "ulander-a",
   "license": "MIT",
   "private": true,
@@ -19,5 +19,7 @@
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
   },
-  "dependencies": {}
+  "dependencies": {
+    "pixi.js": "^4.8.7"
+  }
 }

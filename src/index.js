@@ -1,22 +1,14 @@
-import './style/style.css'
+import App from './js/app'
 
-function component() {
+const index = () => {
   let element = document.createElement('div')
 
-  element.innerHTML = 'Hello webpack'
-  element.classList.add('hello')
+  element.innerHTML = '<h1>PIXI</h1>'
 
   return element
 }
 
-let element = component()
+const element = index()
 document.body.appendChild(element)
 
-// if (module.hot) {
-//   module.hot.accept('./print.js', (module) => {
-//     console.log('Accepting the updated printMe module!')
-//     document.body.removeChild(element)
-//     element = component
-//     document.body.appendChild(element)
-//   })
-// }
+const app = new App

@@ -16,7 +16,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Webpack'
+      title: 'Pixi.js'
     }),
     new webpack.HotModuleReplacementPlugin()
   ],

@@ -1,2 +1,2 @@
-# webpack_preconfig
-Preconfigured webpack
+# pixi-tutorial
+Trying out pixi.js
