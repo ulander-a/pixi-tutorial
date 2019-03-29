@@ -32,8 +32,23 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader']
+        use: [{
+          loader: 'file-loader',
+          options: {
+            limit: 8000,
+            name: 'src/images[hash]-[name].[ext]'
+          }
+        }]
       }
     ]
   }
 }
+
+// module.exports = {
+//   context: __dirname,
+//   node: {
+//     __filename: true
+//   }
+// }
+
+// console.log(__filename)
