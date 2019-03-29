@@ -18,9 +18,9 @@ const mid = new Mid()
 app.stage.addChild(mid)
 
 const update = () => {
-    far.tilePosition.x -= 0.128
-    mid.tilePosition.x -= 0.64
-
+    far.update()
+    mid.update()
+    
     requestAnimationFrame(update)
 }
 

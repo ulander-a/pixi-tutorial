@@ -7,6 +7,9 @@ export function Far() {
     PIXI.extras.TilingSprite.call(this, texture, 512, 256)
     this.position.set(0, 0)
     this.tilePosition.set(0, 0)
+    this.update = () => {
+        this.tilePosition.x -= 0.128
+    }
 }
 
 Far.prototype = Object.create(PIXI.extras.TilingSprite.prototype)
@@ -16,6 +19,9 @@ export function Mid() {
     PIXI.extras.TilingSprite.call(this, texture, 512, 256)
     this.position.set(0, 128)
     this.tilePosition.set(0, 0)
+    this.update = () => {
+        this.tilePosition.x -= 0.64
+    }
 }
 
 Mid.prototype = Object.create(PIXI.extras.TilingSprite.prototype)
