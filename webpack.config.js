@@ -43,12 +43,3 @@ module.exports = {
     ]
   }
 }
-
-// module.exports = {
-//   context: __dirname,
-//   node: {
-//     __filename: true
-//   }
-// }
-
-// console.log(__filename)
