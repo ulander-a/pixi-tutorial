@@ -7,8 +7,13 @@ export function Far() {
     PIXI.extras.TilingSprite.call(this, texture, 512, 256)
     this.position.set(0, 0)
     this.tilePosition.set(0, 0)
-    this.update = () => {
-        this.tilePosition.x -= 0.128
+    this.viewportX = 0
+    this.DELTA_X = 0.128
+
+    this.setViewportX = (newViewportX) => {
+        const distanceTravelled = newViewportX - this.viewportX
+        this.viewportX = newViewportX
+        this.tilePosition.x -= (distanceTravelled * this.DELTA_X)
     }
 }
 
@@ -19,8 +24,13 @@ export function Mid() {
     PIXI.extras.TilingSprite.call(this, texture, 512, 256)
     this.position.set(0, 128)
     this.tilePosition.set(0, 0)
-    this.update = () => {
-        this.tilePosition.x -= 0.64
+    this.viewportX = 0
+    this.DELTA_X = 0.64
+
+    this.setViewportX = (newViewportX) => {
+        const distanceTravelled = newViewportX - this.viewportX
+        this.viewportX = newViewportX
+        this.tilePosition.x -= (distanceTravelled * this.DELTA_X)
     }
 }
 
@@ -33,10 +43,22 @@ export class Scroller {
 
         this.mid = new Mid()
         stage.addChild(this.mid)
+
+        this.viewportX = 0
     }
 
-    update() {
-        this.far.update()
-        this.mid.update()
+    getViewportX() {
+        return this.viewportX
+    }
+
+    setViewportX(viewportX) {
+        this.viewportX = viewportX
+        this.far.setViewportX(viewportX)
+        this.mid.setViewportX(viewportX)
+    }
+
+    moveViewportXBy(units) {
+        const newViewportX = this.viewportX + units
+        this.setViewportX(newViewportX)
     }
 }

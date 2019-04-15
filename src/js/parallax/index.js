@@ -15,7 +15,7 @@ function init() {
     const scroller = new Scroller(app.stage)
 
     const update = () => {
-        scroller.update()
+        scroller.moveViewportXBy(3)
         requestAnimationFrame(update)
     }
 
