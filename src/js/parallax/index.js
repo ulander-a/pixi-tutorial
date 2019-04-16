@@ -1,7 +1,7 @@
 import 'pixi.js'
 import wallSprite from '../../images/wall.png'
-// import wallJSON from '../../json/wall.json'
-import { Scroller } from './lib.js'
+import wallJSON from '../../json/wall.json'
+import { Scroller, WallSpritesPool } from './lib.js'
 
 class Main {
     constructor() {
@@ -22,20 +22,47 @@ class Main {
     }
 
     loadSpriteSheet() {
-        const data = require('../../json/wall.json')
+        const data = wallJSON
         PIXI.loader
         .add(wallSprite, data)
         .load((loader, resources) => {
-            console.log(resources[wallSprite])
             const sheet = new PIXI.Spritesheet(resources[wallSprite].texture.baseTexture, data)
-            sheet.parse(() => { console.log('we gucci') })
+            sheet.parse(() => {
+                this.spriteSheetLoaded()
+            })
         })
     }
 
     spriteSheetLoaded() {
         this.scroller = new Scroller(this.stage)
         requestAnimationFrame(this.update.bind(this))
-        // const slice1 = PIXI.Sprite.fromFrame('edge_01')
+
+        this.pool = new WallSpritesPool()
+        this.wallSlices = []
+        this.borrowWallSprites(9);
+
+
+    }
+
+    borrowWallSprites(num) {
+        for (let i = 0; i < num; i++) {
+            const sprite = this.pool.borrowWindow()
+            sprite.position.x = -32 + (i * 64)
+            sprite.position.y = 128
+            
+            this.wallSlices.push(sprite)
+            this.stage.addChild(sprite)
+        }
+    }
+
+    returnWallSprites() {
+        for (let i = 0; i < this.wallSlices.length; i++) {
+            const sprite = this.wallSlices[i]
+            this.stage.removeChild(sprite)
+            this.pool.returnWindow(sprite)
+        }
+
+        this.wallSlices = []
     }
 }
 

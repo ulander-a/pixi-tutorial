@@ -62,3 +62,42 @@ export class Scroller {
         this.setViewportX(newViewportX)
     }
 }
+
+export class WallSpritesPool {
+    constructor() {
+        this.createWindows()
+    }
+
+    borrowWindow() {
+        return this.windows.shift()
+    }
+
+    returnWindow(sprite) {
+        return this.windows.push(sprite)
+    }
+
+    createWindows() {
+        this.windows = []
+        this.addWindowSprites(6, 'window_01')
+        this.addWindowSprites(6, 'window_02')
+        this.shuffle(this.windows)
+    }
+
+    addWindowSprites(amount, frameId) {
+        for (let i = 0; i < amount; i++) {
+            const sprite = PIXI.Sprite.fromFrame(frameId)
+            this.windows.push(sprite)
+        }
+    }
+
+    shuffle(array) {
+        var len = array.length;
+        var shuffles = len * 3;
+        for (var i = 0; i < shuffles; i++)
+        {
+          var wallSlice = array.pop();
+          var pos = Math.floor(Math.random() * (len-1));
+          array.splice(pos, 0, wallSlice);
+        }
+    }
+}
