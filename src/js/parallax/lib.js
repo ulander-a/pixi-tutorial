@@ -69,6 +69,7 @@ export class WallSpritesPool {
         this.createDecorations()
         this.createFrontEdges()
         this.createBackEdges()
+        this.createSteps()
     }
 
     borrowWindow() {
@@ -160,6 +161,25 @@ export class WallSpritesPool {
 
     returnBackEdge() {
         this.backEdges.push(sprite)
+    }
+
+    createSteps() {
+        this.steps = []
+        this.addStepSprites(2, 'step_01')
+    }
+
+    addStepSprites(amount, frameId) {
+        const sprite = PIXI.Sprite.fromFrame(frameId)
+        sprite.anchor.y = 0.25
+        this.steps.push(sprite)
+    }
+
+    borrowStep() {
+        return this.steps.shift()
+    }
+
+    returnStep() {
+        this.steps.push(sprite)
     }
 
     shuffle(array) {
