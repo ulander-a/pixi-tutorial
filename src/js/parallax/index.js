@@ -12,7 +12,7 @@ class Main {
             { view: document.getElementById('game-canvas') }
         )
         this.scrollSpeed = 1
-        this.loadSpriteSheet()
+        // this.loadSpriteSheet()
     }
 
     update() {
@@ -39,14 +39,16 @@ class Main {
 
         this.pool = new WallSpritesPool()
         this.wallSlices = []
-        this.borrowWallSprites(9);
-
-
+        this.borrowWallSprites(9)
     }
 
     borrowWallSprites(num) {
         for (let i = 0; i < num; i++) {
-            const sprite = this.pool.borrowWindow()
+            if (i % 2 == 0) {
+                var sprite = this.pool.borrowWindow()
+            } else {
+                var sprite = this.pool.borrowDecoration()
+            }
             sprite.position.x = -32 + (i * 64)
             sprite.position.y = 128
             
@@ -59,7 +61,12 @@ class Main {
         for (let i = 0; i < this.wallSlices.length; i++) {
             const sprite = this.wallSlices[i]
             this.stage.removeChild(sprite)
-            this.pool.returnWindow(sprite)
+
+            if (i % 2 == 0) {
+                this.pool.returnWindow(sprite)
+            } else {
+                this.pool.returnDecoration(sprite)
+            }
         }
 
         this.wallSlices = []
@@ -69,6 +76,7 @@ class Main {
 function init() {
     document.body.innerHTML = '<canvas id="game-canvas" />'
     const main = new Main()
+    main.loadSpriteSheet()
 }
 
 init()

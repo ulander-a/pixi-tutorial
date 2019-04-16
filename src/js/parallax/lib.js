@@ -66,6 +66,7 @@ export class Scroller {
 export class WallSpritesPool {
     constructor() {
         this.createWindows()
+        this.createDecorations()
     }
 
     borrowWindow() {
@@ -90,6 +91,21 @@ export class WallSpritesPool {
         }
     }
 
+    addDecorationSprites(amount, frameId) {
+        for (let i = 0; i < amount; i++) {
+            const sprite = PIXI.Sprite.fromFrame(frameId)
+            this.decorations.push(sprite)
+        }
+    }
+
+    borrowDecoration() {
+        return this.decorations.shift()
+    }
+
+    returnDecoration(sprite) {
+        this.decorations.push(sprite)
+    }
+
     shuffle(array) {
         var len = array.length;
         var shuffles = len * 3;
@@ -99,5 +115,13 @@ export class WallSpritesPool {
           var pos = Math.floor(Math.random() * (len-1));
           array.splice(pos, 0, wallSlice);
         }
+    }
+
+    createDecorations() {
+        this.decorations = []
+        this.addDecorationSprites(6, 'decoration_01')
+        this.addDecorationSprites(6, 'decoration_02')
+        this.addDecorationSprites(6, 'decoration_03')
+        this.shuffle(this.decorations)
     }
 }
