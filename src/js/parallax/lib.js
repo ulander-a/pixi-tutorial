@@ -67,6 +67,8 @@ export class WallSpritesPool {
     constructor() {
         this.createWindows()
         this.createDecorations()
+        this.createFrontEdges()
+        this.createBackEdges()
     }
 
     borrowWindow() {
@@ -91,6 +93,14 @@ export class WallSpritesPool {
         }
     }
 
+    createDecorations() {
+        this.decorations = []
+        this.addDecorationSprites(6, 'decoration_01')
+        this.addDecorationSprites(6, 'decoration_02')
+        this.addDecorationSprites(6, 'decoration_03')
+        this.shuffle(this.decorations)
+    }
+
     addDecorationSprites(amount, frameId) {
         for (let i = 0; i < amount; i++) {
             const sprite = PIXI.Sprite.fromFrame(frameId)
@@ -106,6 +116,52 @@ export class WallSpritesPool {
         this.decorations.push(sprite)
     }
 
+    createFrontEdges() {
+        this.frontEdges = []
+        this.addFrontEdgeSprites(2, 'edge_01')
+        this.addFrontEdgeSprites(2, 'edge_02')
+        this.shuffle(this.frontEdges)
+    }
+
+    addFrontEdgeSprites(amount, frameId) {
+        for (let i = 0; i < amount; i++) {
+            const sprite = PIXI.Sprite.fromFrame(frameId)
+            this.frontEdges.push(sprite)
+        }
+    }
+
+    borrowFrontEdge() {
+        return this.frontEdges.shift()
+    }
+
+    returnFrontEdge(sprite) {
+        this.frontEdges.push(sprite)
+    }
+
+    createBackEdges() {
+        this.backEdges = []
+        this.addBackEdgeSprites(2, 'edge_01')
+        this.addBackEdgeSprites(2, 'edge_02')
+        this.shuffle(this.backEdges)
+    }
+
+    addBackEdgeSprites(amount, frameId) {
+        for (let i = 0; i < amount; i++) {
+            const sprite = PIXI.Sprite.fromFrame(frameId)
+            sprite.anchor.x = 1
+            sprite.scale.x = -1
+            this.backEdges.push(sprite)
+        }
+    }
+
+    borrowBackEdge() {
+        return this.backEdges.shift()
+    }
+
+    returnBackEdge() {
+        this.backEdges.push(sprite)
+    }
+
     shuffle(array) {
         var len = array.length;
         var shuffles = len * 3;
@@ -115,13 +171,5 @@ export class WallSpritesPool {
           var pos = Math.floor(Math.random() * (len-1));
           array.splice(pos, 0, wallSlice);
         }
-    }
-
-    createDecorations() {
-        this.decorations = []
-        this.addDecorationSprites(6, 'decoration_01')
-        this.addDecorationSprites(6, 'decoration_02')
-        this.addDecorationSprites(6, 'decoration_03')
-        this.shuffle(this.decorations)
     }
 }

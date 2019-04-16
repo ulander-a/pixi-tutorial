@@ -24,13 +24,13 @@ class Main {
     loadSpriteSheet() {
         const data = wallJSON
         PIXI.loader
-        .add(wallSprite, data)
-        .load((loader, resources) => {
-            const sheet = new PIXI.Spritesheet(resources[wallSprite].texture.baseTexture, data)
-            sheet.parse(() => {
-                this.spriteSheetLoaded()
+            .add(wallSprite, data)
+            .load((loader, resources) => {
+                const sheet = new PIXI.Spritesheet(resources[wallSprite].texture.baseTexture, data)
+                sheet.parse(() => {
+                    this.spriteSheetLoaded()
+                })
             })
-        })
     }
 
     spriteSheetLoaded() {
@@ -39,38 +39,28 @@ class Main {
 
         this.pool = new WallSpritesPool()
         this.wallSlices = []
-        this.borrowWallSprites(9)
+        this.generateTestWallSpan()
     }
 
-    borrowWallSprites(num) {
-        for (let i = 0; i < num; i++) {
-            if (i % 2 == 0) {
-                var sprite = this.pool.borrowWindow()
-            } else {
-                var sprite = this.pool.borrowDecoration()
-            }
-            sprite.position.x = -32 + (i * 64)
+    generateTestWallSpan() {
+        const lookupTable = [
+            this.pool.borrowFrontEdge,  // 1st slice
+            this.pool.borrowWindow,     // 2nd slice
+            this.pool.borrowDecoration, // 3rd slice
+            this.pool.borrowWindow,     // 4th slice
+            this.pool.borrowDecoration, // 5th slice
+            this.pool.borrowWindow,     // 6th slice
+            this.pool.borrowBackEdge    // 7th slice
+        ]
+        lookupTable.forEach((func, i) => {
+            const sprite = func.call(this.pool)
+            sprite.position.x = 32 + (i * 64)
             sprite.position.y = 128
-            
             this.wallSlices.push(sprite)
             this.stage.addChild(sprite)
-        }
+        })
     }
 
-    returnWallSprites() {
-        for (let i = 0; i < this.wallSlices.length; i++) {
-            const sprite = this.wallSlices[i]
-            this.stage.removeChild(sprite)
-
-            if (i % 2 == 0) {
-                this.pool.returnWindow(sprite)
-            } else {
-                this.pool.returnDecoration(sprite)
-            }
-        }
-
-        this.wallSlices = []
-    }
 }
 
 function init() {
